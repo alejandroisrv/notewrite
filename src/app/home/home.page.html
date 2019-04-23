@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Notas
+    </ion-title>
+    
+    <ion-buttons slot="secondary">
+        <ion-icon style="margin-left:10px;margin-right:10px;" slot="icon-only" name="add" (click)="newNota()"></ion-icon>
+      </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list *ngIf="notas != null; else notShow">
+    <ion-item  *ngFor="let nota of notas " (click)="goToDetalle(nota.id)">
+      {{nota.titulo}}
+    </ion-item>
+  </ion-list>
+  <ng-template #notShow padding>
+      <p>No hay notas para mostrar :(</p>
+    </ng-template>
+</ion-content>
+

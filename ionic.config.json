@@ -1,0 +1,7 @@
+{
+  "name": "delivery-bar",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}
