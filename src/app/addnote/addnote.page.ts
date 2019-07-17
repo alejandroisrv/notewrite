@@ -18,8 +18,7 @@ export class AddnotePage implements OnInit {
 
   constructor(public navCttrl: NavController ,public notaService: NotasServices, private activateRoute: ActivatedRoute) { 
     this.id = this.activateRoute.snapshot.paramMap.get('id');
-    notaService.getNota( this.id)
-    .valueChanges().subscribe( nota => {
+    notaService.getNota( this.id).valueChanges().subscribe( nota => {
       this.nota = nota
 
   })
