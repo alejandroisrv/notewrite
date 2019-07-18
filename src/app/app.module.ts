@@ -12,6 +12,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { NotasServices } from 'src/services/notas.services';
 import { alertServices } from 'src/services/alert.services';
+import { OneSignal } from '@ionic-native/onesignal/ngx';
 
 
 export const firebaseConfig =  {
@@ -35,7 +36,7 @@ export const firebaseConfig =  {
     StatusBar,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    NotasServices,alertServices
+    NotasServices,alertServices,OneSignal
   ],
   bootstrap: [AppComponent]
 })

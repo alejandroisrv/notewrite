@@ -1,6 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { AlertController } from '@ionic/angular'
 import { NavController } from '@ionic/angular'
+import { ActivatedRoute } from '@angular/router';
 import { NotasServices } from 'src/services/notas.services';
 import { alertServices } from 'src/services/alert.services';
 
@@ -15,16 +16,17 @@ export class HomePage {
   constructor(public navCtrl: NavController, public alertService: alertServices,public alertController: AlertController, public notaServicio: NotasServices) {
     notaServicio.getNotas().valueChanges().subscribe(notas => {
         this.notas = notas
-
     })
+
+
   }
 
   notas = []
-  nota = {id:null,titulo:null,descripcion:null};
+  nota = {id:null,titulo:null,descripcion:null,fecha:null,user:null};
   id=null
-  goToDetalle(id) {
+  goToDetalle(id,user) {
 
-    this.navCtrl.navigateForward(`/addnote/${id}`)
+    this.navCtrl.navigateForward(`/addnote/${id}/${user}`)
 
   }
 
@@ -57,10 +59,9 @@ export class HomePage {
     this.presentPrompt();
   }
   addNota(){
-
     this.nota.id = Date.now();
     this.notaServicio.crearNota(this.nota)
-    
+
   }
 
 

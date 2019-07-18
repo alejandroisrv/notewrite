@@ -5,19 +5,25 @@
     </ion-title>
     
     <ion-buttons slot="secondary">
+        <ion-icon style="margin:0px 10px;" slot="icon-only" class="icon" name="globe"></ion-icon>
         <ion-icon style="margin-left:10px;margin-right:10px;" slot="icon-only" name="add" (click)="newNota()"></ion-icon>
       </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <ion-list *ngIf="notas != null; else notShow">
-    <ion-item  *ngFor="let nota of notas " (click)="goToDetalle(nota.id)">
-      {{nota.titulo}}
-    </ion-item>
+<ion-content fullscreen>
+  <ion-list *ngIf="notas.length > 0; else notShow">
+      <ion-list-header>
+          MIS NOTAS
+        </ion-list-header>
+      <ion-item  *ngFor="let nota of notas " (click)="goToDetalle(nota.id,nota.user)">
+          <ion-label>
+              <h2>{{ nota.titulo }}</h2>
+              <p>{{ nota.descripcion }} <small float-right>{{ nota.fecha | date: 'H:mm'}}</small></p>
+            </ion-label>
+      </ion-item>
   </ion-list>
   <ng-template #notShow padding>
       <p>No hay notas para mostrar :(</p>
     </ng-template>
 </ion-content>
-

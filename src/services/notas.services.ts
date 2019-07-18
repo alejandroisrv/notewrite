@@ -1,46 +1,54 @@
 import { Injectable } from '@angular/core'
 import { AngularFireDatabase } from '@angular/fire/database';
+import { AngularFireAuth  } from '@angular/fire/auth'
+import { Router } from '@angular/router';
 
 @Injectable()
 export class NotasServices{
 
-  constructor(public afDB : AngularFireDatabase){}
+  constructor(public afDB : AngularFireDatabase, public auth : AngularFireAuth,public router : Router){
+    if ( this.auth.auth.currentUser == null) {
+        this.router.navigate(['/login/'])
+    }
+    
+  }
     notas: any;
-
+    currentUser = '';
 
       public getNotas(){
-        return this.afDB.list('notas/')
+        
+            let currentUser = this.auth.auth.currentUser.email.split('@');   
+            return this.afDB.list('/notas/'+currentUser[0]);
       }
-      public getNota(id : number){
-        return this.afDB.object('notas/'+id)
+
+      public getAllNotes(){  
+        return this.afDB.list('/notas/');
+      }
+
+      public getNota(id : number, user:string){
+        return this.afDB.object('notas/'+ user +'/'+id)
       }
 
       public crearNota(nota){
-
-        this.afDB.database.ref('notas/'+nota.id).set(nota);
-
-        //this.notas.push(nota);
+        let currentUser = this.auth.auth.currentUser.email.split('@'); 
+        nota.user = currentUser[0];
+        nota.fecha = new Date().getTime();
+        this.afDB.database.ref('notas/'+ currentUser[0]+'/'+nota.id).set(nota);
 
       }
       public deleteNota(nota){
-
-        
-        this.afDB.database.ref('notas/'+nota.id).remove();
-
+        let currentUser = this.auth.auth.currentUser.email.split('@');  
+        this.afDB.database.ref('notas/'+currentUser[0]+'/'+nota.id).remove();
 
       }
       public editNota(nota){
 
-        //for(let i=0; i< this.notas.length; i++){
-          //if(this.notas[i].id== nota.id){
-            //this.notas[i]=nota
+        let currentUser = this.auth.auth.currentUser.email.split('@');  
+        this.afDB.database.ref('notas/'+ currentUser[0]+'/'+nota.id).set(nota);
 
-          //}
-        //}
-
-        this.afDB.database.ref('notas/'+nota.id).set(nota);
       }
 }
+
 
 
 

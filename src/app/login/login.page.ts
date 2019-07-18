@@ -17,8 +17,9 @@ export class LoginPage implements OnInit {
   }
   OnSubmitLogin(){
 
-    this.authService.login(this.email,this.psswd).then( res => {
-          this.router.navigate(['/home'])
+    this.authService.login(this.email+'@n.com',this.psswd).then( res => {
+      
+          this.router.navigate(['/home/'])
       }
     ).catch(err => this.alertService.presentAlert("Error", "Los datos son incorrectos") )
 

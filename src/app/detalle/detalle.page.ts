@@ -14,14 +14,15 @@ export class DetallePage implements OnInit {
 
 
   id = null;
-  
+  user = null;
 
-  nota: any  = {id:null,titulo:null,descripcion:null};
+  nota: any  = {id:null,titulo:null,descripcion:null,fecha:null};
   
 
   constructor(public navCttrl: NavController ,public notaService: NotasServices , public alertServices: alertServices , navCtrl : NavController,private activateRoute: ActivatedRoute) { 
     this.id = this.activateRoute.snapshot.paramMap.get('id');
-    notaService.getNota( this.id)
+    this.user = this.activateRoute.snapshot.paramMap.get('user');
+    notaService.getNota(this.id,this.user)
     .valueChanges().subscribe( nota => {
       this.nota = nota
 
@@ -36,7 +37,7 @@ export class DetallePage implements OnInit {
 
   editNota(){
     this.notaService.editNota(this.nota)
-      this.navCttrl.navigateForward(`/addnote/${this.nota.id}`)
+    this.navCttrl.navigateForward(`/addnote/${this.nota.id}/${this.nota.user}`)
   }
 
 

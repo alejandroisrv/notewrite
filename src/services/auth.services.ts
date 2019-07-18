@@ -14,16 +14,19 @@ constructor(private authF : AngularFireAuth ){ }
 login(email: string , psswd:string){
 
    return new Promise((resolve,rejectd ) => {
-        this.authF.auth.signInWithEmailAndPassword( email,psswd).
-        then(
-    
-            res=>  resolve(res)
-        ).catch(erro => rejectd(erro))
+        this.authF.auth.signInWithEmailAndPassword( email,psswd)
+        .then(res=>  {
+            resolve(res)
+        })
+        .catch(erro => rejectd(erro))
     }
 
     )
- 
 
+}
+
+getCurrentUser(){
+    return this.authF.auth.currentUser
 }
 
 
